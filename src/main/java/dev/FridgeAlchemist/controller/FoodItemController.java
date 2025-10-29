@@ -37,6 +37,10 @@ public class FoodItemController {
     @GetMapping("/{id}")
     public ResponseEntity<FoodItemResponse> getById(@PathVariable Long id) {
         FoodItem food = service.getById(id).orElse(null);
+        if(food == null){
+            return ResponseEntity.notFound().build();
+        }
+
         return ResponseEntity.ok(mapper.toResponse(food));
     }
 

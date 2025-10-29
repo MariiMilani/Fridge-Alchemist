@@ -5,7 +5,7 @@ import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
-import java.time.LocalDateTime;
+import java.time.LocalDate;
 
 @Entity
 @Table(name = "food_item")
@@ -22,7 +22,9 @@ public class FoodItem {
 
     private Integer quant;
 
-    private CategoryFood category;
+    @Enumerated(EnumType.STRING)
+    @Column(columnDefinition = "food_category")
+    private FoodCategory category;
 
-    private LocalDateTime expiration;
+    private LocalDate expiration;
 }

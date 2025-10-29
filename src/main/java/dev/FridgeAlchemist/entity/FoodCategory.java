@@ -1,6 +1,6 @@
 package dev.FridgeAlchemist.entity;
 
-public enum CategoryFood {
+public enum FoodCategory {
     PROTEIN,
     FRUIT_VEGETABLE,
     FAT_OIL,

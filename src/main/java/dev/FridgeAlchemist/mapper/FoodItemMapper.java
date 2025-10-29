@@ -3,7 +3,9 @@ package dev.FridgeAlchemist.mapper;
 import dev.FridgeAlchemist.controller.dto.FoodItemRequest;
 import dev.FridgeAlchemist.controller.dto.FoodItemResponse;
 import dev.FridgeAlchemist.entity.FoodItem;
+import org.springframework.stereotype.Component;
 
+@Component
 public class FoodItemMapper {
 
     public FoodItem toEntity(FoodItemRequest request){

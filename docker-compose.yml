@@ -1,0 +1,10 @@
+services:
+  postgres:
+    container_name: fridgealchemist
+    image: postgres:latest
+    environment:
+      POSTGRES_DB: fridgealchemist
+      POSTGRES_USER: ${POSTGRES_ROOT_USERNAME}
+      POSTGRES_PASSWORD: ${POSTGRES_ROOT_PASSWORD}
+    ports:
+      - "5432:5432"

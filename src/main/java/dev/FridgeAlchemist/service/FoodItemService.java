@@ -21,7 +21,9 @@ public class FoodItemService {
 
 
     public FoodItem save(FoodItemRequest newFood) {
-        return repository.save(mapper.toEntity(newFood));
+        FoodItem newItem = mapper.toEntity(newFood);
+        repository.insertFoodItem(newItem.getName(), newItem.getQuant(), newItem.getCategory().name(),newItem.getExpiration());
+        return newItem;
     }
 
     public List<FoodItem> getAll() {
