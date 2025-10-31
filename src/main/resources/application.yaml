@@ -21,3 +21,11 @@ spring:
     enabled: true
     location: classpath:db/migration
     baseline-on-migrate: true
+
+  mvc:
+    async:
+      request-timeout: 120000
+
+
+gemini.url.api: https://generativelanguage.googleapis.com/
+
