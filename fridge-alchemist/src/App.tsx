@@ -2,7 +2,7 @@ import './App.css'
 import {Card} from "./components/card/card.tsx";
 import {useFoodData} from "./hooks/useFoodData.ts";
 import {useState} from "react";
-import {CreateModal} from "./components/create-modal/create-modal.tsx";
+import {CreateModal} from "./components/modal/create-modal.tsx";
 
 function App() {
     const {data} = useFoodData();

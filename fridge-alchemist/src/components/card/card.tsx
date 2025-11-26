@@ -1,5 +1,7 @@
 import './card.css'
 import {useFoodDataDelete} from "../../hooks/useFoodDataDelete.ts";
+import {UpdateModal} from "../modal/update-modal.tsx";
+import {useState} from "react";
 
 interface CardProps {
     id: number;
@@ -13,9 +15,17 @@ export function Card({id, name, quant, category, expiration}: CardProps) {
 
     const deleteMutation = useFoodDataDelete();
 
+    const [isModalOpen, setIsModalOpen] = useState(false);
+
     const handleDelete = () => {
-        if(id){
+        if (id) {
             deleteMutation.mutate({id, name, quant, category, expiration});
+        }
+    }
+
+    const handleUpdate = () => {
+        if (id) {
+            setIsModalOpen(prev => !prev);
         }
     }
 
@@ -24,7 +34,11 @@ export function Card({id, name, quant, category, expiration}: CardProps) {
             <div className="card-header">
                 <h2>{name}</h2>
                 <div className="card-header-buttons">
-                    <button>Update</button>
+                    {isModalOpen && <UpdateModal
+                        closeModal={handleUpdate}
+                        id={id}
+                        currentData={{name, quant, category, expiration}}/>}
+                    <button onClick={handleUpdate}>Update</button>
                     <button onClick={handleDelete}>Delete</button>
                 </div>
             </div>

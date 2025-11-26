@@ -23,6 +23,16 @@ public interface FoodItemRepository extends JpaRepository<FoodItem, Long> {
             @Param("expiration")LocalDate expiration
             );
 
+    @Transactional
+    @Modifying
+    @Query(value = "UPDATE food_item SET name = :name, quant = :quant, category = CAST(:category as food_category), expiration = :expiration WHERE id = :id", nativeQuery = true)
+    void updateFoodItem(
+            @Param("id") Long id,
+            @Param("name") String name,
+            @Param("quant") Integer quant,
+            @Param("category") String category,
+            @Param("expiration") LocalDate expiration
+    );
 
 
 }

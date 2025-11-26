@@ -57,7 +57,7 @@ public class FoodItemService {
                     updatedItem.expiration()
             );
 
-            repository.save(newItem);
+            repository.updateFoodItem(newItem.getId(),newItem.getName(), newItem.getQuant(), newItem.getCategory().name(), newItem.getExpiration());
 
             return newItem;
         }
