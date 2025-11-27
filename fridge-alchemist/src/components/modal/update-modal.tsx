@@ -13,8 +13,18 @@ interface InputProps {
 
 interface ModalProps {
     closeModal(): void;
+
     id: number;
     currentData: FoodData;
+}
+
+interface SelectProps {
+    label: string,
+    value: string,
+
+    updateValue(value: string): void,
+
+    options: { value: string, label: string }[]
 }
 
 const Input = ({label, value, updateValue}: InputProps) => {
@@ -22,6 +32,21 @@ const Input = ({label, value, updateValue}: InputProps) => {
         <>
             <label>{label}</label>
             <input value={value} onChange={event => updateValue(event.target.value)}></input>
+        </>
+    )
+}
+
+const Select = ({label, value, updateValue, options}: SelectProps) => {
+    return (
+        <>
+            <label>{label}</label>
+            <select value={value} onChange={event => updateValue(event.target.value)}>
+                {options.map(option => (
+                    <option key={option.value} value={option.value}>
+                        {option.label}
+                    </option>
+                ))}
+            </select>
         </>
     )
 }
@@ -34,8 +59,16 @@ export function UpdateModal({closeModal, id, currentData}: ModalProps) {
 
     const {mutate, isSuccess, isPending} = useFoodDataUpdate();
 
+    const categoryOptions = [
+        {value: 'PROTEIN', label: 'Proteínas'},
+        {value: 'FRUIT_VEGETABLE', label: 'Frutas ou Vegetais'},
+        {value: 'FAT_OIL', label: 'Oleosos'},
+        {value: 'DAIRY', label: 'Laticínios'},
+        {value: 'CARBOHYDRATE', label: 'Carboidratos'}
+    ];
+
     const submit = () => {
-        const foodData: FoodData & {id: number} = {
+        const foodData: FoodData & { id: number } = {
             id,
             name,
             quant: Number(quant),
@@ -53,12 +86,20 @@ export function UpdateModal({closeModal, id, currentData}: ModalProps) {
     return (
         <div className="modal-overlay">
             <div className="modal-body">
-                <h2>Cadastre um novo item no cardápio</h2>
+                <div className="modal-header">
+                    <h2>Cadastre um novo item no cardápio</h2>
+                    <button onClick={closeModal} className="btn-close-modal">X</button>
+                </div>
                 <form className="input-container">
-                    <Input label="name" value={name} updateValue={setName}/>
-                    <Input label="quant" value={quant} updateValue={setQuant}/>
-                    <Input label="category" value={category} updateValue={setCategory}/>
-                    <Input label="expiration" value={expiration} updateValue={setExpiration}/>
+                    <Input label="Nome" value={name} updateValue={setName}/>
+                    <Input label="Quantidade" value={quant} updateValue={setQuant}/>
+                    <Select
+                        label="Categoria"
+                        value={category}
+                        updateValue={setCategory}
+                        options={categoryOptions}
+                    />
+                    <Input label="Validade" value={expiration} updateValue={setExpiration}/>
                 </form>
                 <button onClick={submit} className="btn-secondary">
                     {isPending ? 'atualizando...' : 'atualizar'}

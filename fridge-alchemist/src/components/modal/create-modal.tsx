@@ -1,5 +1,5 @@
-import { useEffect, useState } from 'react';
-import { useFoodDataMutate } from '../../hooks/useFoodDataMutate';
+import {useEffect, useState} from 'react';
+import {useFoodDataMutate} from '../../hooks/useFoodDataMutate';
 import type {FoodData} from '../../interface/FoodData';
 
 import "./modal.css";
@@ -7,6 +7,7 @@ import "./modal.css";
 interface InputProps {
     label: string,
     value: string | number,
+
     updateValue(value: unknown): void
 }
 
@@ -14,7 +15,16 @@ interface ModalProps {
     closeModal(): void
 }
 
-const Input = ({ label, value, updateValue }: InputProps) => {
+interface SelectProps {
+    label: string,
+    value: string,
+
+    updateValue(value: string): void,
+
+    options: { value: string, label: string }[]
+}
+
+const Input = ({label, value, updateValue}: InputProps) => {
     return (
         <>
             <label>{label}</label>
@@ -23,12 +33,35 @@ const Input = ({ label, value, updateValue }: InputProps) => {
     )
 }
 
-export function CreateModal({ closeModal }: ModalProps){
+const Select = ({label, value, updateValue, options}: SelectProps) => {
+    return (
+        <>
+            <label>{label}</label>
+            <select value={value} onChange={event => updateValue(event.target.value)}>
+                {options.map(option => (
+                    <option key={option.value} value={option.value}>
+                        {option.label}
+                    </option>
+                ))}
+            </select>
+        </>
+    )
+}
+
+export function CreateModal({closeModal}: ModalProps) {
     const [name, setName] = useState("");
     const [quant, setQuant] = useState(0);
     const [category, setCategory] = useState("");
     const [expiration, setExpiration] = useState("");
-    const { mutate, isSuccess, isPending } = useFoodDataMutate();
+    const {mutate, isSuccess, isPending} = useFoodDataMutate();
+
+    const categoryOptions = [
+        {value: 'PROTEIN', label: 'Proteínas'},
+        {value: 'FRUIT_VEGETABLE', label: 'Frutas ou Vegetais'},
+        {value: 'FAT_OIL', label: 'Gordura e óleos'},
+        {value: 'DAIRY', label: 'Laticínios'},
+        {value: 'CARBOHYDRATE', label: 'Carboidratos'}
+    ];
 
     const submit = () => {
         const foodData: FoodData = {
@@ -41,19 +74,27 @@ export function CreateModal({ closeModal }: ModalProps){
     }
 
     useEffect(() => {
-        if(!isSuccess) return
+        if (!isSuccess) return
         closeModal();
     }, [isSuccess])
 
-    return(
+    return (
         <div className="modal-overlay">
             <div className="modal-body">
-                <h2>Cadastre um novo item no cardápio</h2>
+                <div className="modal-header">
+                    <h2>Cadastre um novo item no cardápio</h2>
+                    <button onClick={closeModal} className="btn-close-modal">X</button>
+                </div>
                 <form className="input-container">
-                    <Input label="name" value={name} updateValue={setName}/>
-                    <Input label="quant" value={quant} updateValue={setQuant}/>
-                    <Input label="category" value={category} updateValue={setCategory}/>
-                    <Input label="expiration" value={expiration} updateValue={setExpiration}/>
+                    <Input label="Nome" value={name} updateValue={setName}/>
+                    <Input label="Quantidade" value={quant} updateValue={setQuant}/>
+                    <Select
+                        label="Categoria"
+                        value={category}
+                        updateValue={setCategory}
+                        options={categoryOptions}
+                    />
+                    <Input label="Validade" value={expiration} updateValue={setExpiration}/>
                 </form>
                 <button onClick={submit} className="btn-secondary">
                     {isPending ? 'postando...' : 'postar'}

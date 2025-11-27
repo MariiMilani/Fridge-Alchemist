@@ -38,13 +38,13 @@ export function Card({id, name, quant, category, expiration}: CardProps) {
                         closeModal={handleUpdate}
                         id={id}
                         currentData={{name, quant, category, expiration}}/>}
-                    <button onClick={handleUpdate}>Update</button>
-                    <button onClick={handleDelete}>Delete</button>
+                    <button onClick={handleUpdate}>Alterar</button>
+                    <button onClick={handleDelete}>Deletar</button>
                 </div>
             </div>
             <div className="card-bottom">
-                <span>Quantity: {quant}</span>
-                <span>Expiration date: {expiration}</span>
+                <span>Quantidade: {quant}</span>
+                <span>Data validade: {expiration}</span>
             </div>
         </div>
 
