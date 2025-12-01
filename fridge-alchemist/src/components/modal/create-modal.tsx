@@ -1,5 +1,5 @@
 import {useEffect, useState} from 'react';
-import {useFoodDataMutate} from '../../hooks/useFoodDataMutate';
+import {useFoodDataMutate} from '../../hooks/foodData/useFoodDataMutate.ts';
 import type {FoodData} from '../../interface/FoodData';
 
 import "./modal.css";

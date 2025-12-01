@@ -1,5 +1,5 @@
 import axios, {type AxiosPromise} from "axios";
-import type {FoodData} from "../interface/FoodData.ts";
+import type {FoodData} from "../../interface/FoodData.ts";
 import {useQuery} from "@tanstack/react-query";
 
 const API_URL = '/api';

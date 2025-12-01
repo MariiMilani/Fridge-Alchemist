@@ -2,7 +2,7 @@ import {useEffect, useState} from 'react';
 import type {FoodData} from '../../interface/FoodData';
 
 import "./modal.css";
-import {useFoodDataUpdate} from "../../hooks/useFoodDataUpdate.ts";
+import {useFoodDataUpdate} from "../../hooks/foodData/useFoodDataUpdate.ts";
 
 interface InputProps {
     label: string,

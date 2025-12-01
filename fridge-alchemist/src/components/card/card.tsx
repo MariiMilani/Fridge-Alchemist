@@ -1,5 +1,5 @@
 import './card.css'
-import {useFoodDataDelete} from "../../hooks/useFoodDataDelete.ts";
+import {useFoodDataDelete} from "../../hooks/foodData/useFoodDataDelete.ts";
 import {UpdateModal} from "../modal/update-modal.tsx";
 import {useState} from "react";
 

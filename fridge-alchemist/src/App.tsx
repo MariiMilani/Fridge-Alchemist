@@ -1,15 +1,26 @@
 import './App.css'
 import {Card} from "./components/card/card.tsx";
-import {useFoodData} from "./hooks/useFoodData.ts";
+import {useFoodData} from "./hooks/foodData/useFoodData.ts";
 import {useState} from "react";
 import {CreateModal} from "./components/modal/create-modal.tsx";
+import {useRecipe} from "./hooks/recipe/useRecipe.ts";
+import {Aside} from "./components/aside/aside.tsx";
 
 function App() {
     const {data} = useFoodData();
     const [isModalOpen, setIsModalOpen] = useState(false);
+    const {recipe, fetchRecipe, isLoading, isError, error} = useRecipe();
 
     const handleOpenModal = () => {
         setIsModalOpen(prev => !prev);
+    }
+
+    const handleGenerateRecipe = async () => {
+        try {
+            await fetchRecipe();
+        } catch (err) {
+            console.error("Erro ao gerar receita: ", err);
+        }
     }
 
     const dataByCategory = data?.reduce((acc, foodData) => {
@@ -62,14 +73,14 @@ function App() {
                     ))}
                 </div>
                 <div className="aside-grid">
-                    <div>Teste: Esta é uma receita
+                    <div>
+                        {isLoading && <p>Gerando receita...</p>}
+                        {isError && <p>Erro ao gerar a receita: {error?.message}</p>}
+                        {recipe && <Aside recipe={recipe}/>}
                         <br/>
-                        Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut
-                        labore et dolore magna aliqua. Ut enim ad minim veniam,
-                        quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute
-                        irure dolor in reprehenderit in voluptate velit esse
-                        cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in
-                        culpa qui officia deserunt mollit anim id est laborum.
+                        <button onClick={handleGenerateRecipe} disabled={isLoading}>
+                            {isLoading ? 'Gerando...' : 'Gerar receita'}
+                        </button>
                     </div>
                 </div>
                 {isModalOpen && <CreateModal closeModal={handleOpenModal}/>}

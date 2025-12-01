@@ -1,20 +1,17 @@
 import axios, {type AxiosPromise} from "axios";
-import type {FoodData} from "../interface/FoodData.ts";
+import type {FoodData} from "../../interface/FoodData.ts";
 import {useMutation, useQueryClient} from "@tanstack/react-query";
 
 const API_URL = '/api';
 
-const deleteData = async (data: FoodData): AxiosPromise => {
-    if (!data.id){
-        throw new Error('No ID found!')
-    }
-    return axios.delete(API_URL + '/food/' + data.id);
+const postData = async (data: FoodData): AxiosPromise => {
+    return axios.post(API_URL + '/food', data);
 }
 
-export function useFoodDataDelete() {
+export function useFoodDataMutate() {
     const queryClient = useQueryClient();
     const mutate = useMutation({
-        mutationFn: deleteData,
+        mutationFn: postData,
         retry: 2,
         onSuccess: () => {
             queryClient.invalidateQueries({queryKey: ['food-data']})
