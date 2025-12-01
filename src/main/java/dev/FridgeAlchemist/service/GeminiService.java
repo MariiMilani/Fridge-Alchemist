@@ -34,13 +34,16 @@ public class GeminiService {
                         Map.of(
                                 "role", "user",
                                 "parts", List.of(
-                                        Map.of("text", "Agora você é um chef de cozinha que cria receitas.")
+                                        Map.of("text", "Agora você é um chef de cozinha que cria receitas, seja prático e focado, quero apenas as receitas para a marmita.")
                                 )
                         ),
                         Map.of(
                                 "role", "user",
                                 "parts", List.of(
-                                        Map.of("text", prompt)
+
+                                        Map.of("text", "Apresente as receitas no formato de receita, primeiramento o nome da receita, os ingredientes necessários e após isso apresente o modo de preparo"),
+                                        Map.of("text", prompt),
+                                        Map.of("text", "Você não precisa utilizar todos os ingredientes, utilize apenas aqueles que façam sentido na receita")
                                 )
                         )
                 )
