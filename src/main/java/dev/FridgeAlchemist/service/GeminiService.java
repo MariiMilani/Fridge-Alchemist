@@ -40,10 +40,15 @@ public class GeminiService {
                         Map.of(
                                 "role", "user",
                                 "parts", List.of(
-
-                                        Map.of("text", "Apresente as receitas no formato de receita, primeiramento o nome da receita, os ingredientes necessários e após isso apresente o modo de preparo"),
                                         Map.of("text", prompt),
-                                        Map.of("text", "Você não precisa utilizar todos os ingredientes, utilize apenas aqueles que façam sentido na receita")
+                                        Map.of("text", "Você não precisa utilizar todos os ingredientes, utilize apenas aqueles que façam sentido na receita"),
+                                        Map.of("text","Importante: Aqui estão algumas regras para você fazer a resposta. " +
+                                                "1- Use quebra de linhas normais (\\n)." +
+                                                "2- Não use markdown, utilize apenas texto puro." +
+                                                "3- Utilize caixa alta e negrito para títulos e sempre que houver um título, inicie com o titulo em uma nova linha. " +
+                                                "4- Liste os ingredientes com hífens"+
+                                                "5- Divida claramente em: NOME DA RECEITA, INGREDIENTES e MODO DE PREPARO"+
+                                                "6- Numere os passo das receitas.")
                                 )
                         )
                 )
