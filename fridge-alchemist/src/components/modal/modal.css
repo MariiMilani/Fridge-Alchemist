@@ -22,6 +22,10 @@
 
 }
 
+.btn-close-modal{
+    width: 50px !important;
+}
+
 .btn-close-modal:hover {
     background-color: #b21818;
     color: white;
@@ -83,6 +87,12 @@ select {
     position: initial;
     width: 100%;
     margin-top: 32px;
+}
+
+.btn-secondary {
+    height: 50px !important;
+    font-size: 1em !important;
+    font-weight: 500 !important;
 }
 
 .modal-overlay .modal-body .btn-secondary:hover {
